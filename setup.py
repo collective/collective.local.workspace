@@ -40,7 +40,10 @@ setup(name='collective.local.workspace',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'collective.local.adduser',
+          'collective.local.addgroup',
+          'collective.local.sendto',
+          'collective.local.userlisting',
       ],
       extras_require={'test': ['plone.app.testing']},
       entry_points="""
