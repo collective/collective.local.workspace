@@ -44,6 +44,7 @@ setup(name='collective.local.workspace',
           'collective.local.addgroup',
           'collective.local.sendto',
           'collective.local.userlisting',
+          'plone.app.dexterity',
       ],
       extras_require={'test': ['plone.app.testing']},
       entry_points="""

@@ -11,6 +11,7 @@
   <include package="collective.local.addgroup" />
   <include package="collective.local.sendto" />
   <include package="collective.local.userlisting" />
+  <include package="plone.app.dexterity" />
 
   <include file="skins.zcml" />
   <include file="permissions.zcml" />
