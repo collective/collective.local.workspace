@@ -3,12 +3,42 @@
  <permission>Add Groups</permission>
  <permission>Manage users</permission>
  <permission>Sharing page: Delegate WorkspaceManager role</permission>
+ <permission>Sharing page: Delegate Contributor role</permission>
+ <permission>Sharing page: Delegate Editor role</permission>
+ <permission>Sharing page: Delegate Reader role</permission>
+ <permission>Sharing page: Delegate Reviewer role</permission>
+ <permission>Sharing page: Delegate roles</permission>
+ <permission>collective.local.sendto: Send to</permission>
+ <permission>Modify portal content</permission>
+ <permission>Add portal content</permission>
+ <permission>Review portal content</permission>
  <state state_id="published" title="Published">
   <description>Visible to everyone, editable by the owner.</description>
   <permission-map name="Add Groups" acquired="True">
    <permission-role>WorkspaceManager</permission-role>
   </permission-map>
+  <permission-map name="Add portal content" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
   <permission-map name="Manage users" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Review portal content" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Sharing page: Delegate Contributor role" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Sharing page: Delegate Editor role" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Sharing page: Delegate Reader role" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Sharing page: Delegate Reviewer role" acquired="True">
    <permission-role>WorkspaceManager</permission-role>
   </permission-map>
   <permission-map name="Sharing page: Delegate WorkspaceManager role" acquired="True">
@@ -16,11 +46,17 @@
    <permission-role>Site Administrator</permission-role>
    <permission-role>WorkspaceManager</permission-role>
   </permission-map>
+  <permission-map name="Sharing page: Delegate roles" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="collective.local.sendto: Send to" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
  </state>
  <variable variable_id="action" for_catalog="False" for_status="True" update_always="True">
   <description>Previous transition</description>
   <default>
-
+   
    <expression>transition/getId|nothing</expression>
   </default>
   <guard>
@@ -29,7 +65,7 @@
  <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True">
   <description>The ID of the user who performed the previous transition</description>
   <default>
-
+   
    <expression>user/getId</expression>
   </default>
   <guard>
@@ -38,7 +74,7 @@
  <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True">
   <description>Comment about the last transition</description>
   <default>
-
+   
    <expression>python:state_change.kwargs.get('comment', '')</expression>
   </default>
   <guard>
@@ -47,7 +83,7 @@
  <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False">
   <description>Provides access to workflow history</description>
   <default>
-
+   
    <expression>state_change/getHistory</expression>
   </default>
   <guard>
@@ -58,7 +94,7 @@
  <variable variable_id="time" for_catalog="False" for_status="True" update_always="True">
   <description>When the previous transition was performed</description>
   <default>
-
+   
    <expression>state_change/getDateTime</expression>
   </default>
   <guard>
