@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = '1.0b1'
 
@@ -43,14 +42,14 @@ setup(name='collective.local.workspace',
           # -*- Extra requirements: -*-
           'collective.local.adduser',
           'collective.local.addgroup',
-          'collective.local.userlisting',
           'collective.local.sendto',
+          'collective.local.userlisting',
           'plone.app.dexterity',
       ],
       extras_require={'test': ['plone.app.testing']},
       entry_points="""
       # -*- Entry points: -*-
-  	  [z3c.autoinclude.plugin]
-  	  target = plone
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )
