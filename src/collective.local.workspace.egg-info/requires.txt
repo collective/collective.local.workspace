@@ -1,9 +1,0 @@
-setuptools
-collective.local.adduser
-collective.local.addgroup
-collective.local.userlisting
-collective.local.sendto
-plone.app.dexterity
-
-[test]
-plone.app.testing
