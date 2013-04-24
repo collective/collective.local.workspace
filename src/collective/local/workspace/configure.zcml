@@ -25,4 +25,18 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+   <adapter
+       for="*"
+       provides="plone.stringinterp.interfaces.IStringSubstitution"
+       factory=".contentrules.WorkspaceTitleSubstitution"
+       name="workspace_title"
+       />
+
+   <adapter
+       for="*"
+       provides="plone.stringinterp.interfaces.IStringSubstitution"
+       factory=".contentrules.WorkspaceManagerEmailSubstitution"
+       name="workspacemanager_emails"
+
+       />
 </configure>
