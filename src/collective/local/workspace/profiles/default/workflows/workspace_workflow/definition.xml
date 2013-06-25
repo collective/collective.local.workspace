@@ -11,7 +11,10 @@
  <permission>ATContentTypes: View history</permission>
  <permission>Add Groups</permission>
  <permission>Add portal content</permission>
+ <permission>Content rules: Manage rules</permission>
+ <permission>Delete objects</permission>
  <permission>Manage users</permission>
+ <permission>Modify constrain types</permission>
  <permission>Modify portal content</permission>
  <permission>Review portal content</permission>
  <permission>Sharing page: Delegate Contributor role</permission>
@@ -20,11 +23,11 @@
  <permission>Sharing page: Delegate Reviewer role</permission>
  <permission>Sharing page: Delegate WorkspaceManager role</permission>
  <permission>Sharing page: Delegate roles</permission>
+ <permission>View</permission>
  <permission>collective.local.sendto: Send to</permission>
  <permission>plone.app.collection: Add Collection</permission>
- <permission>View</permission>
- <permission>Content rules: Manage rules</permission>
- <permission>Modify constrain types</permission>
+ <permission>Copy or Move</permission>
+ <permission>CMFEditions: Access previous versions</permission>
  <state state_id="published" title="Published">
   <description>Visible to everyone, editable by the owner.</description>
   <permission-map name="ATContentTypes: Add Document" acquired="True">
@@ -60,7 +63,23 @@
   <permission-map name="Add portal content" acquired="True">
    <permission-role>WorkspaceManager</permission-role>
   </permission-map>
+  <permission-map name="CMFEditions: Access previous versions" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
   <permission-map name="Content rules: Manage rules" acquired="True">
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Copy or Move" acquired="False">
+   <permission-role>Contributor</permission-role>
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Reader</permission-role>
+   <permission-role>Reviewer</permission-role>
+   <permission-role>Site Administrator</permission-role>
+   <permission-role>WorkspaceManager</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="True">
    <permission-role>WorkspaceManager</permission-role>
   </permission-map>
   <permission-map name="Manage users" acquired="True">
