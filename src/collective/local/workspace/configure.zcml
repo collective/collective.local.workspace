@@ -39,4 +39,12 @@
        name="workspacemanager_emails"
 
        />
+
+   <adapter
+       for="*"
+       provides="plone.stringinterp.interfaces.IStringSubstitution"
+       factory=".contentrules.AllowedMemberEmailSubstitution"
+       name="allowed_member_emails"
+       />
+
 </configure>
