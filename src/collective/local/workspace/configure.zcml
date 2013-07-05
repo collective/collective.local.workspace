@@ -9,8 +9,8 @@
   <i18n:registerTranslations directory="locales" />
 
   <include package="plone.app.dexterity" />
-  <include package="collective.local.adduser" />
-  <include package="collective.local.addgroup" />
+  <include package="collective.local.adduser" file="minimal.zcml" />
+  <include package="collective.local.addgroup" file="minimal.zcml" />
   <include package="collective.local.sendto" />
   <include package="collective.local.userlisting" />
 
