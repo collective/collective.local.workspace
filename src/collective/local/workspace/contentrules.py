@@ -52,12 +52,6 @@ class AllowedMemberEmailSubstitution(MemberEmailSubstitution):
 
         # get a set of ids of members with the global role
         ids = set([p[0] for p in acl_users.portal_role_manager.listAssignedPrincipals(role)])
-
-        # union with set of ids of members with the local role
-#        ids |= set([id for id, irole
-#                       in acl_users._getAllLocalRoles(self.context).items()
-#                       if role in irole])
-
         # get members from group or member ids
         members = _recursiveGetMembersFromIds(portal, ids)
 
