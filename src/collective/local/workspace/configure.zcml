@@ -47,4 +47,8 @@
        name="allowed_member_emails"
        />
 
-</configure>
+    <subscriber for=".interfaces.IWorkspace
+                     zope.traversing.interfaces.IBeforeTraverseEvent"
+                handler=".handlers.set_workspace_layer" />
+                
+    </configure>
