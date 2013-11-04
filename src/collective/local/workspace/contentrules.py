@@ -7,7 +7,7 @@ from zope.i18nmessageid.message import MessageFactory
 from Products.CMFCore.utils import getToolByName
 
 from plone.stringinterp.adapters import BaseSubstitution,\
-    MailAddressSubstitution
+    MailAddressSubstitution, ReaderEmailSubstitution
 from plone.stringinterp.interfaces import IStringSubstitution
 from plone.stringinterp.adapters import MemberEmailSubstitution,\
     _recursiveGetMembersFromIds
@@ -40,10 +40,7 @@ class WorkspaceManagerEmailSubstitution(MailAddressSubstitution):
         return self.getEmailsForRole('WorkspaceManager')
 
 
-class AllowedMemberEmailSubstitution(MemberEmailSubstitution):
-
-    category = PMF(u'E-Mail Addresses')
-    description = _(u'Members who have access to the content')
+class BaseAllowedEmailSubstitution(MailAddressSubstitution):
 
     def getEmailsForRole(self, role):
 
@@ -52,6 +49,11 @@ class AllowedMemberEmailSubstitution(MemberEmailSubstitution):
 
         # get a set of ids of members with the global role
         ids = set([p[0] for p in acl_users.portal_role_manager.listAssignedPrincipals(role)])
+        # union with set of ids of members with the local role
+        ids |= set([user_id for user_id, irole
+                       in acl_users._getAllLocalRoles(self.context).items()
+                       if role in irole])
+
         # get members from group or member ids
         members = _recursiveGetMembersFromIds(portal, ids)
 
@@ -74,3 +76,15 @@ class AllowedMemberEmailSubstitution(MemberEmailSubstitution):
 
         # get emails
         return u', '.join(self.getPropsForMembers(allowed_members, 'email'))
+
+
+class AllowedMemberEmailSubstitution(BaseAllowedEmailSubstitution, MemberEmailSubstitution):
+
+    category = PMF(u'E-Mail Addresses')
+    description = _(u'Members who have access to the content')
+
+
+class AllowedReaderEmailSubstitution(BaseAllowedEmailSubstitution, ReaderEmailSubstitution):
+
+    category = PMF(u'E-Mail Addresses')
+    description = _(u'Readers who have access to the content')

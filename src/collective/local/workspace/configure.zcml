@@ -37,7 +37,6 @@
        provides="plone.stringinterp.interfaces.IStringSubstitution"
        factory=".contentrules.WorkspaceManagerEmailSubstitution"
        name="workspacemanager_emails"
-
        />
 
    <adapter
@@ -47,8 +46,15 @@
        name="allowed_member_emails"
        />
 
+   <adapter
+       for="*"
+       provides="plone.stringinterp.interfaces.IStringSubstitution"
+       factory=".contentrules.AllowedReaderEmailSubstitution"
+       name="allowed_reader_emails"
+       />
+
     <subscriber for=".interfaces.IWorkspace
                      zope.traversing.interfaces.IBeforeTraverseEvent"
                 handler=".handlers.set_workspace_layer" />
-                
+
     </configure>
