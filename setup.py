@@ -49,7 +49,14 @@ setup(name='collective.local.workspace',
           'collective.local.userlisting',
           'plone.app.dexterity',
       ],
-      extras_require={'test': ['plone.app.testing']},
+      extras_require={
+          'test': ['plone.app.testing',
+                   'plone.app.robotframework',
+                   'robotframework-selenium2screenshots',
+                   'ecreall.helpers.testing',
+                   ],
+          },
+
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
