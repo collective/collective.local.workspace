@@ -146,6 +146,7 @@ Generate screenshots
     Capture and crop page screenshot  ${SSDIR}/sendto.png  portal-column-content
     Input text  mailing_list_email_subject  Message aux contributeurs
     Select checkbox  Contributor.selectButton
+    Execute javascript  tinyMCE.getInstanceById('email_body').setContent("<p>Bonjour,</p><p>Vous pouvez désormais ajouter des documents à cet <strong>espace de travail</strong>.</p><p>Merci,</p><p>Le responsable de l'espace</p>")
     Capture and crop page screenshot  ${SSDIR}/mail_written.png  portal-column-content
 
     Click link  css=#contentview-userlisting a
