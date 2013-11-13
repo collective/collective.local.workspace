@@ -15,9 +15,9 @@ msgstr ""
 "Domain: DOMAIN\n"
 
 msgid "WorkspaceManager"
-msgstr "Responsable"
+msgstr "Peut gérer"
 
 msgid "Workspace Manager"
-msgstr "Responsable"
+msgstr "Peut gérer"
 
 
