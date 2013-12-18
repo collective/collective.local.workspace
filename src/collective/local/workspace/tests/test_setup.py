@@ -1,11 +1,12 @@
 import unittest2 as unittest
 
 from Products.CMFCore.utils import getToolByName
-
-from collective.local.workspace.testing import INTEGRATION
 from plone.stringinterp.interfaces import IStringInterpolator
 from plone.app.testing.helpers import login
 from plone.app.testing.interfaces import SITE_OWNER_NAME
+
+from collective.local.workspace.testing import INTEGRATION
+from collective.local.workspace import api
 
 
 class FakeResponse(object):
@@ -43,7 +44,14 @@ class TestExample(unittest.TestCase):
         self.portal.manage_pasteObjects(cb)
 
         # test string interp
-        # self.portal.workspace.invokeFactory('Document', 'document', title='My document')
-        # doc = workspace.document
-        # title_value = IStringInterpolator(doc)("${workspace_title}")
-        # self.assertEqual(title_value, 'My workspace')
+        workspace.invokeFactory('Document', 'document', title='My document')
+        document = workspace.document
+        # test api
+        self.assertEqual(api.get_workspace(document), workspace)
+
+        # test content rules
+        title_value = IStringInterpolator(document)("${workspace_title}")
+        self.assertEqual(title_value, 'My workspace')
+
+        workspace_url = IStringInterpolator(document)("${workspace_url}")
+        self.assertEqual(workspace_url, workspace.absolute_url())

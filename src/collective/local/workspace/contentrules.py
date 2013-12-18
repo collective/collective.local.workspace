@@ -31,6 +31,20 @@ class WorkspaceTitleSubstitution(BaseSubstitution):
             return ""
 
 
+class WorkspaceURLSubstitution(BaseSubstitution):
+    adapts(IStringSubstitution)
+
+    category = PMF(u'All Content')
+    description = _(u'Workspace URL')
+
+    def safe_call(self):
+        workspace = api.get_workspace(self.context)
+        if workspace:
+            return workspace.absolute_url()
+        else:
+            return ""
+
+
 class WorkspaceManagerEmailSubstitution(MailAddressSubstitution):
 
     category = PMF(u'E-Mail Addresses')

@@ -22,6 +22,8 @@ A layer IWorkspaceLayer is set on request when you are in a workspace.
 
 A `get_workspace` method in api module gives you the workspace root of any content.
 
+String interpolators give you the title and the url of the workspace in an email
+rule action.
 
 Installation
 ============

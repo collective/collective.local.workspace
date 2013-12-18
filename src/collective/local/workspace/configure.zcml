@@ -35,6 +35,13 @@
    <adapter
        for="*"
        provides="plone.stringinterp.interfaces.IStringSubstitution"
+       factory=".contentrules.WorkspaceURLSubstitution"
+       name="workspace_url"
+       />
+
+   <adapter
+       for="*"
+       provides="plone.stringinterp.interfaces.IStringSubstitution"
        factory=".contentrules.WorkspaceManagerEmailSubstitution"
        name="workspacemanager_emails"
        />
