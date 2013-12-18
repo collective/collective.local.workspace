@@ -47,6 +47,7 @@ setup(name='collective.local.workspace',
           'collective.local.addgroup',
           'collective.local.sendto',
           'collective.local.userlisting',
+          'collective.local.contentrules',
           'plone.app.dexterity',
       ],
       extras_require={

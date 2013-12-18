@@ -11,6 +11,7 @@
   <include package="plone.app.dexterity" />
   <include package="collective.local.adduser" file="minimal.zcml" />
   <include package="collective.local.addgroup" file="minimal.zcml" />
+  <include package="collective.local.contentrules" />
   <include package="collective.local.sendto" />
   <include package="collective.local.userlisting" />
 
@@ -44,20 +45,6 @@
        provides="plone.stringinterp.interfaces.IStringSubstitution"
        factory=".contentrules.WorkspaceManagerEmailSubstitution"
        name="workspacemanager_emails"
-       />
-
-   <adapter
-       for="*"
-       provides="plone.stringinterp.interfaces.IStringSubstitution"
-       factory=".contentrules.AllowedMemberEmailSubstitution"
-       name="allowed_member_emails"
-       />
-
-   <adapter
-       for="*"
-       provides="plone.stringinterp.interfaces.IStringSubstitution"
-       factory=".contentrules.AllowedReaderEmailSubstitution"
-       name="allowed_reader_emails"
        />
 
     <subscriber for=".interfaces.IWorkspace
