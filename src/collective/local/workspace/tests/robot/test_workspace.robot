@@ -1,6 +1,5 @@
 *** Settings ***
 
-Resource  Selenium2Screenshots/keywords.robot
 Resource  plone/app/robotframework/keywords.robot
 Resource  plone/app/robotframework/saucelabs.robot
 
@@ -8,19 +7,9 @@ Test Setup  Run keywords  Open SauceLabs test browser
 Test Teardown  Run keywords  Report test status  Close all browsers
 
 
-*** Variables ***
-
-${SSDIR}  /tmp/images
-
-
 *** Keywords ***
 a Site Owner
     Log in as site owner
-
-a French Plone site
-    Go to  ${PLONE_URL}/@@language-controlpanel
-    Select From List  form.default_language  fr
-    Click Button  form.actions.save
 
 Mail configured
     Go to  ${PLONE_URL}/@@mail-controlpanel
@@ -64,13 +53,12 @@ Add new
 I add a workspace
     Go to  ${PLONE_URL}
     Add new  workspace
-    Input text  form-widgets-IBasic-title  Mon espace de travail
+    Input text  form-widgets-IBasic-title  My workspace
     Click Button    form-buttons-save
-    Capture and crop page screenshot  ${SSDIR}/add_workspace.png  portal-column-content
 
 I add a workspace member
     [Arguments]   ${fullname}  ${username}  ${group_id}
-    Go to  ${PLONE_URL}/mon-espace-de-travail/@@sharing
+    Go to  ${PLONE_URL}/my-workspace/@@sharing
     Click link  new-user-link
     Overlay is opened
     Wait Until Page Contains Element  zc.page.browser_form
@@ -80,7 +68,6 @@ I add a workspace member
     # form.roles
     Unselect checkbox  form.roles.3
     Select checkbox  form.groups.${group_id}
-    Capture and crop page screenshot  ${SSDIR}/${username}.png  css=.overlay
     Click button  form.actions.register
     Overlay should close
 
@@ -93,61 +80,83 @@ I add a workspace group
     Input text  title  ${title}
     Input text  description:text  ${description}
     Select checkbox  form.localroles.${local_role_id}
-    Capture and crop page screenshot  ${SSDIR}/${name}.png  css=.overlay
     Submit form  createGroup
     Overlay should close
 
 
 *** Test cases ***
 
-Generate screenshots
+Add a workspace
     Given a Site Owner
-    And a French Plone site
-    And Mail configured
-    Add user to plone site  Pierre Durand  pdurand
-
     I add a workspace
-    Open Add New Menu
-    Wait until page contains  Document
-    Capture and crop page screenshot  ${SSDIR}/add_new_menu.png  plone-contentmenu-factories  css=#plone-contentmenu-factories dd.actionMenuContent
+    Page should contain  My workspace
 
-    Click link  css=#contentview-local_roles a
-    Capture and crop page screenshot  ${SSDIR}/sharing.png  portal-column-content
 
-    I add a workspace group  contributeurs  Contributeurs  Contributeurs de l'espace de travail  0
-    I add a workspace group  moderateurs  Modérateurs  Modérateurs de l'espace de travail  1
-    I add a workspace group  lecteurs  Lecteurs  Lecteurs de l'espace de travail  3
+Add groups to workspace
+    Given a Site Owner
+    And Mail configured
+    I add a workspace
+    Go to  ${PLONE_URL}/my-workspace/@@sharing
+    I add a workspace group  contributors  Contributors  Workspace contributors  0
+    I add a workspace group  moderators  Moderators  Workspace moderators  1
+    I add a workspace group  readers  Readers  Workspace readers  3
 
-    I add a workspace member  Jean Dupont  jdupont  1
+
+Add members to workspace
+    Given a Site Owner
+    And Mail configured
+    I add a workspace
+    Go to  ${PLONE_URL}/my-workspace/@@sharing
+    I add a workspace group  contributors  Contributors  Workspace contributors  0
     I add a workspace member  Marie Durand  mdurand  0
 
-    # add an existing user to workspace
-    Go to  ${PLONE_URL}/mon-espace-de-travail/@@sharing
+
+Add an existing member to workspace
+    Given a Site Owner
+    And Mail configured
+    Add user to plone site  Pierre Durand  pdurand
+    I add a workspace
+    Go to  ${PLONE_URL}/my-workspace/@@sharing
     Input text  sharing-user-group-search  Pierre
     Click button  sharing-search-button
     Wait until page contains  Pierre Durand
-    Capture and crop page screenshot  ${SSDIR}/search_user.png  css=#content-core form
+    Select checkbox  css=tr.odd input[name='entries.role_Reader:records']
+    Click button  sharing-save-button
+    Go to  ${PLONE_URL}/my-workspace/@@userlisting
+    Wait Until Page Contains  Members
+    Page should contain  Pierre Durand
 
-    # add user to group
+
+Add a user to a group
+    Given a Site Owner
+    And Mail configured
+    Add user to plone site  Pierre Durand  pdurand
+    I add a workspace
+    Go to  ${PLONE_URL}/my-workspace/@@sharing
+    I add a workspace group  contributors  Contributors  Workspace contributors  0
     Click link  css=ul#groups-list li:first-child a
     Overlay is opened
-    Capture and crop page screenshot  ${SSDIR}/add_user_to_group_before.png  css=.overlay
     Input text  searchstring  Pierre
     Click button  css=.overlay input[name='form.button.Search']
     Wait until page contains element  css=.overlay input[value='pdurand']
     Select checkbox  css=.overlay input[value='pdurand']
     Click button  css=.overlay input[name='form.button.Add']
     Wait until page contains element  css=.info
-    Capture and crop page screenshot  ${SSDIR}/add_user_to_group_after.png  css=.overlay
     Close Overlay
+    Click link  css=ul#groups-list li:first-child a
+    Overlay is opened
+    Page should contain  Pierre Durand
 
 
+Send mail to a group
+    Given a Site Owner
+    And Mail configured
+    I add a workspace
+    Go to  ${PLONE_URL}/my-workspace/@@sharing
+    I add a workspace group  contributors  Contributors  Workspace contributors  0
+    I add a workspace member  Marie Durand  mdurand  0
+    I add a workspace member  Pierre Durand  pdurand  0
     Click link  css=#contentview-sendtolisting a
-    Capture and crop page screenshot  ${SSDIR}/sendto.png  portal-column-content
-    Input text  mailing_list_email_subject  Message aux contributeurs
+    Input text  mailing_list_email_subject  Message to workspace contributors
     Select checkbox  Contributor.selectButton
-    Execute javascript  tinyMCE.getInstanceById('email_body').setContent("<p>Bonjour,</p><p>Vous pouvez désormais ajouter des documents à cet <strong>espace de travail</strong>.</p><p>Merci,</p><p>Le responsable de l'espace</p>")
-    Capture and crop page screenshot  ${SSDIR}/mail_written.png  portal-column-content
-
-    Click link  css=#contentview-userlisting a
-    Capture and crop page screenshot  ${SSDIR}/members.png  portal-column-content
+    Execute javascript  tinyMCE.getInstanceById('email_body').setContent("<p>Hello,</p><p>You can now add content to this <strong>workspace</strong>.</p><p>Thank you,</p><p>The workspace administrator</p>")

@@ -4,7 +4,11 @@ Changelog
 1.0rc3 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add robot tests.
+  [cedricmessiant]
+
+- Add Travis CI integration.
+  [cedricmessiant]
 
 
 1.0rc2 (2013-12-19)

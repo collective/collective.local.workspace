@@ -53,7 +53,6 @@ setup(name='collective.local.workspace',
       extras_require={
           'test': ['plone.app.testing',
                    'plone.app.robotframework',
-                   'robotframework-selenium2screenshots',
                    'ecreall.helpers.testing',
                    ],
           },
